@@ -5,7 +5,7 @@ class HomeController < ApplicationController
 
     
 
-    
+
   	@q = params[:q].to_s
 
 
@@ -41,7 +41,7 @@ class HomeController < ApplicationController
     if @rtmin != "" and @rtmin != nil
       @movies = @movies.minRT @rtmin
     end
-    @movies = @movies.includes(:rating).where('ratings.source == "imdb"').order('ratings.rating desc')
+    @movies = @movies.includes(:rating).order('ratings.rating desc') #where('ratings.source == "imdb"')
   end
 
 
