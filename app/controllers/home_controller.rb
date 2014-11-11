@@ -2,8 +2,24 @@ class HomeController < ApplicationController
 
 
   def test
+    require 'Imgur'
+    require 'open-uri'
+    require 'net/http'
     client = Imgur::Client.new('9017a4a9f99b687')
-    render json: {hola: 'lynn'}
+    url = 'http://ia.media-imdb.com/images/M/MV5BOTA2NjUwODM4MF5BMl5BanBnXkFtZTgwODY4ODkzMzE@._V1._SX200_CR0,0,200,200_.jpg'
+    # resp = HTTParty.get(url)
+    image = 'tmp/tempthing.'+Time.now.to_i.to_s+'.png'
+    open(image, 'wb') do |file|
+      file << open(url).read
+    end
+
+    # resp = open(url).read
+    # return render text: resp
+
+    image = Imgur::LocalImage.new(image)
+    image = client.upload(image)
+    # uploaded = client.upload(image)
+    render json: {hola:'lynn',img: image.link}
   end
 
 

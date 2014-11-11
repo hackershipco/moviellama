@@ -1,4 +1,4 @@
- <div class="jumbotron2"> 
+ <div class="jumbotron2">
  	<h1 class="findertitle">Find My Movie!</h1>
  	<%= form_tag('/', method: 'get') do %>
  	<%= text_field_tag(:q, @q, :placeholder => 'title', :class => "searchfield") %>
@@ -24,7 +24,7 @@
  			<% end %>
  		</div>
 
- 		
+
  		<% @movies.each do |movie| %>
  		<div class="row">
  			<div class="col-sm-3 postersettings">
@@ -37,11 +37,11 @@
 
  			<div class="col-sm-9 details">
  				<h2 class="results-title"><%=movie.title%> (<%=movie.year%>)</h2>
- 				<p class="results-subtitle"><%=movie.genre %> | <span class="glyphicon glyphicon-time"></span> 
- 					<%= pluralize(movie.runtime/60, 'hr' )%> 
- 					<%= pluralize(movie.runtime%60, 'min' )%> 
+ 				<p class="results-subtitle"><%=movie.genre %> | <span class="glyphicon glyphicon-time"></span>
+ 					<%= pluralize(movie.runtime/60, 'hr' )%>
+ 					<%= pluralize(movie.runtime%60, 'min' )%>
  					<% if movie.oscars > 0 %>
- 					| <%=pluralize(movie.oscars, 'Oscar')%> 
+ 					| <%=pluralize(movie.oscars, 'Oscar')%>
  					<% end %>
  				</p>
 
@@ -52,10 +52,10 @@
  					<%else%>
  					<img class="icon" src="<%= asset_path('tomato.png') %>" />
  					<% end %>
- 					<%=r.getRating%> 
+ 					<%=r.getRating%>
  					<%end%>
  					<img class="icon" src="<%= asset_path('llama.jpg') %>" /><%=movie.llamaRating %>
- 				</div>					
+ 				</div>
 
  				<div class="results-plot">
  					<p><%=movie.plot%></p>
@@ -63,24 +63,23 @@
 
  				<div class="results-watch">
  					<%movie.source.each do |s|%>
- 					<a href="http://www.imdb.com<%=s.url%>" target="_blank" >
- 						<%if s.price? %>
- 						Amazon price: 
- 						<%=number_to_currency s.price%>
- 						<%end%>
- 						<img class="source" src="<%=asset_path(Movie.sourceimage s.name) %>">
- 						<%end%>
- 					</a>
- 				</div>
+ 					<a class='source' href="http://www.imdb.com<%=s.url%>" target="_blank" >
+            <img class="source" src="<%=asset_path(Movie.sourceimage s.name) %>">
+            <%if s.price? %>
+            <%=number_to_currency s.price%>
+            <%end%>
+          </a>
+          <%end%>
+        </div>
 
- 			</div>	
- 		</div>
- 		<% end %>
- 		
+      </div>
+    </div>
+    <% end %>
 
- 	</div>
- </div>
 
- <div class="container-fluid footer">
- 	<footer>save the drama for your llama</footer>
- </div>
+  </div>
+</div>
+
+<div class="container-fluid footer">
+  <footer>save the drama for your llama</footer>
+</div>
