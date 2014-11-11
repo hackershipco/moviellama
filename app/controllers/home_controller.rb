@@ -8,22 +8,18 @@ class HomeController < ApplicationController
 
 
   def index
-
-
-
-
   	@q = params[:q].to_s
-
-
-    url = "http://omdbapi.com/?t=" + @q
-    @response = HTTParty.get(URI.encode(url))
-
     @ymin = params[:ymin]
     @ymax = params[:ymax]
     @y = params[:y]
     @imdbmin = params[:imdbmin]
     @rtmin = params[:rtmin]
+
+    url = "http://omdbapi.com/?t=" + @q
+    @response = HTTParty.get(URI.encode(url))
+
     @movies = Movie
+
   	if(params[:s]!='search')
   		@movies = @movies.limit(0)
       @home = true
@@ -47,7 +43,7 @@ class HomeController < ApplicationController
     if @rtmin != "" and @rtmin != nil
       @movies = @movies.minRT @rtmin
     end
-    @movies = @movies.includes(:rating).where('ratings.source == "imdb"').order('ratings.rating desc')
+    @movies = @movies.includes(:rating).order('ratings.rating desc') #where('ratings.source == "imdb"')
   end
 
 
