@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  
+
   root 'home#index'
+  get 'home/test'
 
   get 'scraper/scrape'
   get 'home/search'
@@ -20,7 +21,7 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   
+  #
 
   # Example resource route with options:
   #   resources :products do

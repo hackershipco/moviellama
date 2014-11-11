@@ -1,11 +1,17 @@
 class HomeController < ApplicationController
 
 
+  def test
+    client = Imgur::Client.new('9017a4a9f99b687')
+    render json: {hola: 'lynn'}
+  end
+
+
   def index
 
-    
 
-    
+
+
   	@q = params[:q].to_s
 
 
@@ -45,5 +51,5 @@ class HomeController < ApplicationController
   end
 
 
- 
+
 end
