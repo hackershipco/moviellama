@@ -28,7 +28,7 @@
  		<% @movies.each do |movie| %>
  		<div class="row">
  			<div class="col-sm-3 postersettings">
- 				<% if movie.poster_url == "N/A" %>
+ 				<% if movie.poster_url == "" %>
  				<img class="" src="<%= asset_path('movieposterunavail.png') %>" />
  				<% else %>
  				<%= image_tag movie.poster_url %>
