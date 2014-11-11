@@ -115,7 +115,7 @@ class Movie < ActiveRecord::Base
     if ['N/A','',nil].include? url
       return ''
     end
-    require 'Imgur'
+    require 'imgur'
     require 'open-uri'
     client = Imgur::Client.new('9017a4a9f99b687')
     image = "#{Rails.root.to_s}/tmp/tempthing."+Time.now.to_i.to_s+".png"
