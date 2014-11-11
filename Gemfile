@@ -20,7 +20,7 @@ gem 'jbuilder', '~> 2.0'
 
 # gem 'imgur', :git => 'git://github.com/dvidsilva/imgur.git'
 
-# gem 'imgur-api'
+gem 'imgur-api'
 
 
 gem 'httparty'
