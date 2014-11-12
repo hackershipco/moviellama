@@ -1,83 +1,170 @@
+<div class="container">
  <div class="jumbotron2">
  	<h1 class="findertitle">Find My Movie!</h1>
- 	<%= form_tag('/', method: 'get') do %>
- 	<%= text_field_tag(:q, @q, :placeholder => 'title', :class => "searchfield") %>
- 	<%= text_field_tag(:ymin, @ymin, :placeholder => 'after', :class => "searchfield") %>
- 	<%= text_field_tag(:ymax, @ymax, :placeholder => 'before', :class => "searchfield") %>
- 	<%= text_field_tag(:imdbmin, @imdbmin, :placeholder => 'min IMDB score', :class => "searchfield") %>
- 	<%= text_field_tag(:rtmin, @rtmin, :placeholder => 'min Rotten Tomatoes score', :class => "searchfield") %><br><br>
- 	<%= submit_tag('Search', :class => "btn searchbtn") %>
- 	<a class="btn luckybtn" href="/?s=search">Feeling Lucky</a>
- 	<input type='hidden' name='s' value='search'>
- 	<% end %>
- </div>
 
+ 	<%= form_tag('/', method: 'get', class: 'form') do %>
+  <div class='row'>
+    <%= text_field_tag(:q, @q, :placeholder => 'Enter movie title', :class => "titlesearch searchfield form-control") %>
+  </div>
 
- <div class="jumbotron3">
- 	<div class="container movie-results">
+  <input type='hidden' name='s' value='search'>
 
- 		<div class="notfound">
- 			<% if @movies.empty? and @home != true %>
- 			<h2 class="llamaerror"> We're sorry, our army of llamas can't find your movie! </h2>
- 			<img class="llamaerror" src="<%= asset_path('sadllama.jpeg') %>" />
- 			<h2 class="llamaerror"> Hint: Try searching without filters.</h2>
- 			<% end %>
- 		</div>
+</div>
 
+<div class="row text-right advanced-filters-button">
+  <a class="btn btn-link show-advanced-filters">
+    More Options
+  </a>
+  <a class="btn btn-link hide-advanced-filters">
+    Less Options
+  </a>  
 
- 		<% @movies.each do |movie| %>
- 		<div class="row">
- 			<div class="col-sm-3 postersettings">
- 				<% if movie.poster_url == "" %>
- 				<img class="" src="<%= asset_path('movieposterunavail.png') %>" />
- 				<% else %>
- 				<%= image_tag movie.poster_url %>
- 				<% end %>
- 			</div>
+</div>
 
- 			<div class="col-sm-9 details">
- 				<h2 class="results-title"><%=movie.title%> (<%=movie.year%>)</h2>
- 				<p class="results-subtitle"><%=movie.genre %> | <span class="glyphicon glyphicon-time"></span>
- 					<%= pluralize(movie.runtime/60, 'hr' )%>
- 					<%= pluralize(movie.runtime%60, 'min' )%>
- 					<% if movie.oscars > 0 %>
- 					| <%=pluralize(movie.oscars, 'Oscar')%>
- 					<% end %>
- 				</p>
+<div class="row advanced-filters basic">
 
- 				<div class="results-ratings">
- 					<%movie.rating.order('source').each do |r|%>
- 					<% if r.source == 'imdb' %>
- 					<a href="http://www.imdb.com/title/<%=movie.imdbid%>" target="_blank"><img class="icon" src="<%= asset_path('imdb.png') %>" /> </a>
- 					<%else%>
- 					<img class="icon" src="<%= asset_path('tomato.png') %>" />
- 					<% end %>
- 					<%=r.getRating%>
- 					<%end%>
- 					<img class="icon" src="<%= asset_path('llama.jpg') %>" /><%=movie.llamaRating %>
- 				</div>
+  <div class="col-sm-2 genre">
+    <%= label_tag :genre %>
+    <%= select_tag :genre, options_for_select(["","Action","Adventure","Animation","Biography","Comedy","Documentary","Drama","Family","Fantasy","Horror","Music","Mystery","Romance","Sci-Fi","Thriller","War"],params[:genre]), class: 'form-control' %>
+    </select>
+  </div>
 
- 				<div class="results-plot">
- 					<p><%=movie.plot%></p>
- 				</div>
+  <div class="col-sm-2 runtime text-center">
+    <%= label_tag :"max runtime" %>
+    <input name='runtime' type="hidden" value="<%=@runtime%>">
+    <div class="col-xs-12"><span class="runtime-value"><%= @runtime.to_i > 0 ? @runtime: 5 %></span></div>
+    <div class="col-xs-12"><div id="runtime" data-value="<%=@runtime%>" ></div></div>
+    
+  </div>
 
- 				<div class="results-watch">
- 					<%movie.source.each do |s|%>
- 					<a class='source' href="http://www.imdb.com<%=s.url%>" target="_blank" >
-            <img class="source" src="<%=asset_path(Movie.sourceimage s.name) %>">
-            <%if s.price? %>
-            <%=number_to_currency s.price%>
-            <%end%>
-          </a>
-          <%end%>
-        </div>
+  <div class="col-sm-2 releaseyear">
+    <%= label_tag 'Released after' %>
+    <%= text_field_tag(:ymin, @ymin, :placeholder => 'year', :class => "form-control") %>
+  </div>
 
-      </div>
+  <div class="col-sm-2 releaseyear">
+    <%= label_tag 'Released before' %>
+    <%= text_field_tag(:ymax, @ymax, :placeholder => 'year', :class => "form-control") %>
+  </div>
+
+  <div class="col-sm-2 imdbmin text-center">
+    <%= label_tag :IMDB %>
+    <input name='imdbmin' type="hidden" value="<%=@imdbmin%>">
+    <div class="col-xs-12">
+      <span class="imdbmin-value"><%= (@imdbmin != nil and @imdbmin.to_i >= 0 ) ? @imdbmin : 5%></span>
     </div>
-    <% end %>
+    <div class="col-xs-12"><div id="imdbmin" data-value="<%=@imdbmin%>" ></div></div>
+  </div>
 
+  <div class="col-sm-2 rtmin text-center">
+    <%= label_tag 'Rotten Tomatoes' %>
+    <input name='rtmin' type="hidden" value="<%=@rtmin%>">
+    <div class="col-xs-12">
+      <span class="rtmin-value"><%= (@rtmin != nil and @rtmin.to_i >= 0 ) ? @rtmin : 50 %></span>
+    </div>
+    <div class="col-xs-12"><div id="rtmin" data-value="<%=@rtmin%>" ></div></div>
+  </div>
+
+</div>
+
+<div class="row advanced-filters viewing-sources">
+  <div class="col-sm-12"><label>Where to watch:</label></div>
+  
+  <div class="col-sm-2 amazon-instant">
+    <label>
+    <%= image_tag('amazonicon.png', title: 'Amazon Instant Video')%>
+    <%=radio_button_tag :source, "aiv", @source %>
+    </label>
+  </div>
+
+  <div class="col-sm-2 amazon-prime">
+    <label>
+    <%= image_tag('amazonprimeicon.png', title: 'Amazon Prime Video')%>
+    <%=radio_button_tag :source, "apv", @source %>
+    </label>
+  </div>
+
+  <div class="col-sm-2 box-office">
+    <label>
+    <%= image_tag('intheatersicon.png', title: 'Playing in Theaters')%>
+    <%=radio_button_tag :source, "box", @source %>
+    </label>
+  </div>
+    
+
+</div>
+
+<div class="row search-buttons text-center">
+  <%= submit_tag('Search', :class => "btn searchbtn") %>
+  <a class="btn luckybtn" href="/?s=search">Feeling Lucky</a>
+</div>
+<% end %>
+<div class="jumbotron3">
+  <div class="container movie-results">
+
+   <div class="notfound">
+    <% if @movies.empty? and @home != true %>
+    <h2 class="llamaerror"> We're sorry, our army of llamas can't find your movie! </h2>
+    <img class="llamaerror" src="<%= asset_path('sadllama.jpeg') %>" />
+    <h2 class="llamaerror"> Hint: Try searching without filters.</h2>
+    <% end %>
+  </div>
+
+
+  <% @movies.each do |movie| %>
+  <div class="row">
+    <div class="col-sm-3 postersettings">
+     <% if movie.poster_url == "" %>
+     <img class="" src="<%= asset_path('movieposterunavail.png') %>" />
+     <% else %>
+     <%= image_tag movie.poster_url %>
+     <% end %>
+   </div>
+
+   <div class="col-sm-9 details">
+     <h2 class="results-title"><%=movie.title%> (<%=movie.year%>)</h2>
+     <p class="results-subtitle"><%=movie.genre %> | <span class="glyphicon glyphicon-time"></span>
+      <%= pluralize(movie.runtime/60, 'hr' )%>
+      <%= pluralize(movie.runtime%60, 'min' )%>
+      <% if movie.oscars > 0 %>
+      | <%=pluralize(movie.oscars, 'Oscar')%>
+      <% end %>
+    </p>
+
+    <div class="results-ratings">
+      <%movie.rating.order('source').each do |r|%>
+      <% if r.source == 'imdb' %>
+      <a href="http://www.imdb.com/title/<%=movie.imdbid%>" target="_blank"><img class="icon" src="<%= asset_path('imdb.png') %>" /> </a>
+      <%else%>
+      <img class="icon" src="<%= asset_path('tomato.png') %>" />
+      <% end %>
+      <%=r.getRating%>
+      <%end%>
+      <img class="icon" src="<%= asset_path('llama.jpg') %>" /><%=movie.llamaRating %>
+    </div>
+
+    <div class="results-plot">
+      <p><%=movie.plot%></p>
+    </div>
+
+    <div class="results-watch">
+      <%movie.source.each do |s|%>
+      <a class='source' href="http://www.imdb.com<%=s.url%>" target="_blank" >
+        <img class="source" src="<%=asset_path(Movie.sourceimage s.name) %>">
+        <%if s.price? %>
+        <%=number_to_currency s.price%>
+        <%end%>
+      </a>
+      <%end%>
+    </div>
 
   </div>
+</div>
+<% end %>
+
+
+</div>
+</div>
 </div>
 
 <div class="container-fluid footer">

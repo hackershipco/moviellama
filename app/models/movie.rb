@@ -2,6 +2,10 @@ class Movie < ActiveRecord::Base
 	has_many :rating
 	has_many :source
 
+  def self.runTime y
+    y  = y.to_i * 60
+    where("runtime <= ?", y)
+  end
 
 	def self.yearFilter y
 		where("year = ?", y)
@@ -23,9 +27,17 @@ class Movie < ActiveRecord::Base
 		joins(:rating).merge(Rating.where("source = 'rt' and rating >= ? " , y))
 	end
 
-	def self.amazonPrime y
-		joins(:source).merge(Source.where("amazon-prime = ?" , y))
+	def self.amazonIV
+		joins(:source).merge(Source.where("name = 'amazon-instant-video' "))
 	end
+
+  def self.amazonPV
+    joins(:source).merge(Source.where("name = 'amazon-prime' "))
+  end
+
+  def self.boxOffice
+    joins(:source).merge(Source.where("name = 'boxoffice' "))
+  end
 
 	def self.obtain q
   	url = "http://imdbapi.com/?s=" + q

@@ -25,11 +25,14 @@ class HomeController < ApplicationController
 
   def index
   	@q = params[:q].to_s
+    @genre = params[:genre]
+    @runtime = params[:runtime]
     @ymin = params[:ymin]
     @ymax = params[:ymax]
     @y = params[:y]
     @imdbmin = params[:imdbmin]
     @rtmin = params[:rtmin]
+    @source = params[:source]
 
     url = "http://omdbapi.com/?t=" + @q
     @response = HTTParty.get(URI.encode(url))
@@ -44,6 +47,12 @@ class HomeController < ApplicationController
   		Movie.obtain(@q)
   		@movies =  Movie.where("lower(title) like ? AND lower(genre) not like ? ", "%#{@q}%", "%short%")
   	end
+    if @genre != "" and @genre != nil
+      @movies =  @movies.where("lower(genre) like ? ", "%#{@genre}%")
+    end
+    if @runtime != nil and @runtime.to_i > 0
+      @movies = @movies.runTime @runtime
+    end
     if @y != "" and @y != nil
       @movies = @movies.yearFilter @y
     end
@@ -53,13 +62,22 @@ class HomeController < ApplicationController
     if @ymax != "" and @ymax != nil
       @movies = @movies.yearMax @ymax
     end
-    if @imdbmin != "" and @imdbmin != nil
+
+    if @imdbmin != nil and @imdbmin.to_i > 0
       @movies = @movies.minIMDB @imdbmin
     end
-    if @rtmin != "" and @rtmin != nil
+    if @rtmin != nil and @rtmin.to_i > 0
       @movies = @movies.minRT @rtmin
     end
+    if @source == 'aiv'
+      @movies =  @movies.amazonIV
+    elsif @source == 'apv'
+      @movies =  @movies.amazonPV
+    elsif @source == 'box'
+      @movies =  @movies.boxOffice
+    end
     @movies = @movies.includes(:rating).order('ratings.rating desc') #where('ratings.source == "imdb"')
+    # render json: @movies
   end
 
 

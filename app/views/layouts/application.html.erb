@@ -2,8 +2,10 @@
 <html>
 <head>
   <title>Moviellama</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+
+
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -34,12 +36,12 @@
     </div><! //.nav-collapse -->
   <!-- </div>
 </div>  -->
-<div class="jumbotron homepage"
+<div class="jumbotron homepage">
 <div class="container">
 
     <div class="text-center">
-    <center><h1><a href="/">Movie Llama</a></h1></center>
-      <a href="/"><%=image_tag  'llamalogo.jpg' %></a>
+    <center><h1 id="llamalogo"><a href="/">Movie Llama</a></h1></center>
+      <a href="/" class="llamalogo"><%=image_tag 'llamalogo.jpg' %></a>
     </div>
 
     </div>

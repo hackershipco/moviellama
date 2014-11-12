@@ -12,9 +12,11 @@
  *
  *= require_tree .
  *= require_self
+ *= require jquery-ui
  */
  @import "bootstrap-sprockets";
  @import 'bootstrap';
+
 
  @import url(https://fonts.googleapis.com/css?family=Oswald);
  @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
@@ -79,8 +81,12 @@ font-face {
 	}
 }
 
-.llamalogo {
-	width: 200px;
+#llamalogo {
+	font-size: 0.6em;
+}
+
+.llamalogo img {
+	width: 150px;
 }
 
 .topbar h1 {
@@ -107,7 +113,7 @@ font-face {
 
 .findertitle {
 	color: #f2392c;
-	font-size: 6em;
+	font-size: 4em;
 	font-family: Open Sans Condensed, Open Sans, sans-serif;
 	margin: 30px auto;
 
@@ -190,3 +196,13 @@ img.source {
 	font-family: 'open sans', sans-serif;
 }
 
+.viewing-sources {
+	img {
+		width: 60px;
+	}
+}
+
+.advanced-filters,
+.hide-advanced-filters {
+	display: none;
+}
