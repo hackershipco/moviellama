@@ -32,7 +32,7 @@
   <div class="col-sm-2 runtime text-center">
     <%= label_tag :"max runtime" %>
     <input name='runtime' type="hidden" value="<%=@runtime%>">
-    <div class="col-xs-12"><span class="runtime-value"><%= @runtime.to_i > 0 ? @runtime: 5 %></span></div>
+    <div class="col-xs-12"><span class="runtime-value"><%= @runtime.to_i > 0 ? @runtime: 5 %></span> hours</div>
     <div class="col-xs-12"><div id="runtime" data-value="<%=@runtime%>" ></div></div>
     
   </div>
