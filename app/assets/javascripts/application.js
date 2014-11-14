@@ -30,8 +30,8 @@ $(document).ready(function(){
 		min: 0.0,
 		step: 0.5,
 		slide: function (ev, ui) {
-			$('.imdbmin-value').html(ui.value);
-			$('[name="imdbmin"]').val(ui.value);
+			$('.imdbmin-value').html(ui.value.toFixed(1));
+			$('[name="imdbmin"]').val(ui.value.toFixed(1));
 		}});
 	$( "#rtmin" ).slider({ max: 100 , 
 		value : ( $('#rtmin').data('value') >= 0 && $('#rtmin').data('value') !== "" ) ?  $('#rtmin').data('value') : 50,
