@@ -25,9 +25,9 @@ $(document).ready(function(){
 			$('.runtime-value').html(ui.value);
 			$('[name="runtime"]').val(ui.value);
 		}});
-	$( "#imdbmin" ).slider({ max: 10 , 
-		value : ($('#imdbmin').data('value') >= 0 && $('#imdbmin').data('value') !== "") ?  $('#imdbmin').data('value') : 5,
-		min: 0,
+	$( "#imdbmin" ).slider({ max: 10.0 , 
+		value : ($('#imdbmin').data('value') >= 0.0 && $('#imdbmin').data('value') !== "") ?  $('#imdbmin').data('value') : 5.0,
+		min: 0.0,
 		step: 0.5,
 		slide: function (ev, ui) {
 			$('.imdbmin-value').html(ui.value);
@@ -65,7 +65,7 @@ $(document).ready(function(){
 
 	$('.show-advanced-filters').click(function(){
 		$('.show-advanced-filters').hide();
-		$('.hide-advanced-filters').show();
+		$('.hide-advanced-filters').css({'display': 'inline-block'});
 		$('.advanced-filters').show();
 
 	});

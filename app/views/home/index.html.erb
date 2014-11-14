@@ -23,74 +23,91 @@
 
 <div class="row advanced-filters basic">
 
-  <div class="col-sm-2 genre">
-    <%= label_tag :genre %>
-    <%= select_tag :genre, options_for_select(["","Action","Adventure","Animation","Biography","Comedy","Documentary","Drama","Family","Fantasy","Horror","Music","Mystery","Romance","Sci-Fi","Thriller","War"],params[:genre]), class: 'form-control' %>
-    </select>
-  </div>
-
-  <div class="col-sm-2 runtime text-center">
-    <%= label_tag :"max runtime" %>
-    <input name='runtime' type="hidden" value="<%=@runtime%>">
-    <div class="col-xs-12"><span class="runtime-value"><%= @runtime.to_i > 0 ? @runtime: 5 %></span> hours</div>
-    <div class="col-xs-12"><div id="runtime" data-value="<%=@runtime%>" ></div></div>
-    
-  </div>
-
-  <div class="col-sm-2 releaseyear">
-    <%= label_tag 'Released after' %>
-    <%= text_field_tag(:ymin, @ymin, :placeholder => 'year', :class => "form-control") %>
-  </div>
-
-  <div class="col-sm-2 releaseyear">
-    <%= label_tag 'Released before' %>
-    <%= text_field_tag(:ymax, @ymax, :placeholder => 'year', :class => "form-control") %>
-  </div>
-
-  <div class="col-sm-2 imdbmin text-center">
-    <%= label_tag :IMDB %>
-    <input name='imdbmin' type="hidden" value="<%=@imdbmin%>">
-    <div class="col-xs-12">
-      <span class="imdbmin-value"><%= (@imdbmin != nil and @imdbmin.to_i >= 0 ) ? @imdbmin : 5%></span>
+  <div class="genre-runtime-section col-sm-4">
+    <h5> GENERAL </h5>
+    <div class="advanced-borders col-sm-12">
+    <div class="col-sm-6 genre">
+      <div class="advanced-label"><%= label_tag :genre %></div>
+      <%= select_tag :genre, options_for_select(["","Action","Adventure","Animation","Biography","Comedy","Documentary","Drama","Family","Fantasy","Horror","Music","Mystery","Romance","Sci-Fi","Thriller","War"],params[:genre]), class: 'form-control' %>
+      </select>
     </div>
-    <div class="col-xs-12"><div id="imdbmin" data-value="<%=@imdbmin%>" ></div></div>
+
+    <div class="col-sm-6 runtime text-center">
+      <%= label_tag :"max runtime" %>
+      <input name='runtime' type="hidden" value="<%=@runtime%>">
+      <div class="col-xs-12"><span class="runtime-value"><%= @runtime.to_i > 0 ? @runtime: 5 %></span> hours</div>
+      <div class="col-xs-12"><div id="runtime" data-value="<%=@runtime%>" ></div></div>
+    </div>
+    </div>
   </div>
 
-  <div class="col-sm-2 rtmin text-center">
-    <%= label_tag 'Rotten Tomatoes' %>
-    <input name='rtmin' type="hidden" value="<%=@rtmin%>">
-    <div class="col-xs-12">
-      <span class="rtmin-value"><%= (@rtmin != nil and @rtmin.to_i >= 0 ) ? @rtmin : 50 %></span>
+  <div class="release-date-section col-sm-4">
+    <h5> RELEASE YEAR </h5>
+    <div class="advanced-borders col-sm-12">
+      <div class="col-sm-6 releaseyear">
+        <div class="advanced-label"><%= label_tag 'After' %></div>
+        <%= text_field_tag(:ymin, @ymin, :placeholder => 'year', :class => "form-control release-year-box") %>
+      </div>
+
+      <div class="col-sm-6 releaseyear">
+        <div class="advanced-label"><%= label_tag 'Before' %></div>
+        <%= text_field_tag(:ymax, @ymax, :placeholder => 'year', :class => "form-control release-year-box") %>
+      </div>
     </div>
-    <div class="col-xs-12"><div id="rtmin" data-value="<%=@rtmin%>" ></div></div>
+  </div>
+
+  <div class="ratings-section col-sm-4">
+    <h5> MINIMUM RATINGS </h5>
+    <div class="advanced-borders col-sm-12">
+      <div class="col-sm-6 imdbmin text-center">
+        <%= label_tag :IMDB, 'IMDB'%>
+        <input name='imdbmin' type="hidden" value="<%=@imdbmin%>">
+        <div class="col-xs-12">
+          <span class="imdbmin-value"><%= (@imdbmin != nil and @imdbmin.to_i >= 0.0 ) ? @imdbmin : 5.0%></span>
+        </div>
+        <div class="col-xs-12"><div id="imdbmin" data-value="<%=@imdbmin%>" ></div></div>
+      </div>
+
+      <div class="col-sm-6 rtmin text-center">
+        <%= label_tag 'Rotten Tomatoes' %>
+        <input name='rtmin' type="hidden" value="<%=@rtmin%>">
+        <div class="col-xs-12">
+          <span class="rtmin-value"><%= (@rtmin != nil and @rtmin.to_i >= 0 ) ? @rtmin : 50 %></span>
+        </div>
+        <div class="col-xs-12"><div id="rtmin" data-value="<%=@rtmin%>" ></div></div>
+      </div> 
+    </div>
   </div>
 
 </div>
 
 <div class="row advanced-filters viewing-sources">
-  <div class="col-sm-12"><label>Where to watch:</label></div>
-  
-  <div class="col-sm-2 amazon-instant">
-    <label>
-    <%= image_tag('amazonicon.png', title: 'Amazon Instant Video')%>
-    <%=radio_button_tag :source, "aiv", @source %>
-    </label>
-  </div>
+  <div class="col-sm-12">
+    <h5>WHERE TO WATCH</h5>
+    <div class="col-sm-4"></div>
+    <div class="advanced-borders col-sm-4">
+      <div class="col-sm-4 amazon-instant">
+        <label>
+        <%= image_tag('amazonicon.png', title: 'Amazon Instant Video')%>
+        <%=radio_button_tag :source, "aiv", @source %>
+        </label>
+      </div>
 
-  <div class="col-sm-2 amazon-prime">
-    <label>
-    <%= image_tag('amazonprimeicon.png', title: 'Amazon Prime Video')%>
-    <%=radio_button_tag :source, "apv", @source %>
-    </label>
-  </div>
+      <div class="col-sm-4 amazon-prime">
+        <label>
+        <%= image_tag('amazonprimeicon.png', title: 'Amazon Prime Video')%>
+        <%=radio_button_tag :source, "apv", @source %>
+        </label>
+      </div>
 
-  <div class="col-sm-2 box-office">
-    <label>
-    <%= image_tag('intheatersicon.png', title: 'Playing in Theaters')%>
-    <%=radio_button_tag :source, "box", @source %>
-    </label>
+      <div class="col-sm-4 box-office">
+        <label>
+        <%= image_tag('intheatersicon.png', title: 'Playing in Theaters')%>
+        <%=radio_button_tag :source, "box", @source %>
+        </label>
+      </div>
+  </div> 
   </div>
-    
 
 </div>
 

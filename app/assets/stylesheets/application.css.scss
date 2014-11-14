@@ -206,3 +206,74 @@ img.source {
 .hide-advanced-filters {
 	display: none;
 }
+
+.show-advanced-filters,
+.hide-advanced-filters {
+	font-size: 1.2em;
+}
+
+.viewing-sources {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border-radius: 5px;	
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.btn-link {
+	font-family: Open Sans Condensed, Open Sans, sans-serif;
+
+}
+
+
+.advanced-borders {
+	padding: 10px 10px;
+	background-color: #ffe4d6;
+	border-radius: 5px;
+}
+
+#runtime,
+#imdbmin,
+#rtmin,
+.release-year-box {
+	margin-top: 5px;
+}
+
+#runtime .ui-slider-handle,
+#imdbmin .ui-slider-handle,
+#rtmin .ui-slider-handle { 
+	background: #f2392c;
+	border-color: lightgrey;
+	border-radius: 20px;
+	width: 25px;
+}
+
+
+.advanced-filters h5 {
+	color: grey;
+	text-align: center;
+}
+
+.advanced-label {
+	text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+	.advanced-borders {
+		padding: 10px 10px;
+		background-color: white;
+		border-radius: 5px;
+	}
+	#runtime,
+	#imdbmin,
+	#rtmin,
+	.release-year-box {
+		margin-bottom: 5px;
+	}
+
+	.release-date-section h5 {
+		margin-top: 50px;
+	}
+
+}
+
