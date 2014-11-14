@@ -215,7 +215,7 @@ img.source {
 .viewing-sources {
 	margin-top: 15px;
 	margin-bottom: 15px;
-	border-radius: 5px;	
+	border-radius: 5px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
@@ -241,7 +241,7 @@ img.source {
 
 #runtime .ui-slider-handle,
 #imdbmin .ui-slider-handle,
-#rtmin .ui-slider-handle { 
+#rtmin .ui-slider-handle {
 	background: #f2392c;
 	border-color: lightgrey;
 	border-radius: 20px;
@@ -277,3 +277,22 @@ img.source {
 
 }
 
+
+
+#runtime,  #imdbmin, #rtmin{
+	background: red;
+	overflow-y:hidden;
+	margin-bottom:10px;
+	span.ui-slider-handle {
+		background: white;
+		&:after {
+			display: block;
+			content: "";
+			margin-left: 17px;
+			width: 1000px;
+			height: 10px;
+			margin-top: 4px;
+			background: rgba(255, 255, 255, 0.84);
+		}
+	}
+}
